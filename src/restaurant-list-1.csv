@@ -1,0 +1,54 @@
+Restaurant Name,Type of Food,Price
+Sizzle Grill,Steakhouse,expensive
+Prime Cuts,Steakhouse,expensive
+Grill Masters,Steakhouse,mid-range
+Flame Charred,Steakhouse,mid-range
+The Meatery,Steakhouse,cheap
+
+Spice Fusion,Indian,expensive
+Curry House,Indian,mid-range
+Namaste India,Indian,cheap
+Masala Junction,Indian,expensive
+Tandoori Delight,Indian,expensive
+
+Bella Italia,Italian,expensive
+Pizza Napoli,Italian,mid-range
+Mama Mia's,Italian,cheap
+Ristorante Romano,Italian,expensive
+Pasta Palace,Italian,expensive
+
+Mama's Kitchen,Home-style Cooking,mid-range
+Comfort Bites,Home-style Cooking,cheap
+Homestead Café,Home-style Cooking,expensive
+Country Kitchen,Home-style Cooking,mid-range
+Grandma's Recipes,Home-style Cooking,expensive
+
+Tokyo Sushi Bar,Japanese,expensive
+Sumo Sushi,Japanese,mid-range
+Sushi Delight,Japanese,cheap
+Ichiban Sushi,Japanese,expensive
+Zen Sushi,Japanese,expensive
+
+Café Paris,Bakery/Café,mid-range
+French Delights,Bakery/Café,cheap
+La Boulangerie,Bakery/Café,expensive
+Bistro Belle,Bakery/Café,expensive
+Sweet Treats,Bakery/Café,expensive
+
+The Green Leaf,Vegetarian/Vegan,expensive
+Green Cuisine,Vegetarian/Vegan,mid-range
+Plant Power,Vegetarian/Vegan,cheap
+Vegan Delight,Vegetarian/Vegan,expensive
+Veggie Haven,Vegetarian/Vegan,expensive
+
+Taco Fiesta,Mexican,mid-range
+El Paso Tacos,Mexican,cheap
+Hola Amigos,Mexican,expensive
+Casa de Salsa,Mexican,expensive
+Burrito Bar,Mexican,expensive
+
+Golden Dragon,Chinese,mid-range
+Peking House,Chinese,cheap
+Lucky Bamboo,Chinese,expensive
+Chopstick Express,Chinese,expensive
+Dragon Palace,Chinese,expensive
