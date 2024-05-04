@@ -1,22 +1,4 @@
-import csv, random, os, re
-import logging
-
-
-# Class for filtering by food type
-class FoodTypeFilter:
-    def __init__(self, choice):
-        self.choice = choice
-
-    def filter(self, restaurant):
-        return restaurant[1] == self.choice or self.choice == '9'
-
-# Class for filtering by price range
-class PriceRangeFilter:
-    def __init__(self, choice):
-        self.choice = choice
-
-    def filter(self, restaurant):
-        return restaurant[2] == self.choice or self.choice == '4'
+import csv, re, os
 
 # Function to print welcome message
 def display_welcome_message():
@@ -40,6 +22,12 @@ def adjust_filename(filename):
     filename = filename.lower()  # Convert to lowercase
     filename = filename.replace(" ", "-")  # Replace spaces with hyphens
     return filename
+
+# Function to check if the input contains only allowed characters
+def is_valid_input(input_string):
+    # Regular expression to match only alphanumeric characters and hyphen
+    pattern = r'^[a-zA-Z0-9\-]+$'
+    return bool(re.match(pattern, input_string))
 
 # Function to create a new list
 def create_new_list():
@@ -93,9 +81,12 @@ def create_new_list():
                 print("3. Expensive")
                 price_choice = input("Enter your choice: ")
 
-                if price_choice in ['1', '2', '3']:
-                    price_ranges = ["Cheap", "Mid-range", "Expensive"]
-                    price_range = price_ranges[int(price_choice) - 1]
+                if price_choice == '1':
+                    price_range = "Cheap"
+                elif price_choice == '2':
+                    price_range = "Mid-range"
+                elif price_choice == '3':
+                    price_range = "Expensive"
                 else:
                     print("Invalid choice. Please choose a number between 1 and 3.")
                     continue
@@ -106,7 +97,7 @@ def create_new_list():
                 # Ask the user for next action
                 print("\nOptions:")
                 print("1. Enter another restaurant")
-                print("2. Save")
+                print("2. Save and roll")
                 print("3. Exit")
                 next_action = input("Enter your choice: ")
 
@@ -126,7 +117,7 @@ def create_new_list():
 def select_list():
     print("Selecting a list...")
     # Get a list of all CSV files in the current directory
-    csv_files = [file[:-4] for file in os.listdir() if file.endswith('.csv')]
+    csv_files = [file for file in os.listdir() if file.endswith('.csv')]
     
     if not csv_files:
         print("No lists found. Please create a list first.")
@@ -135,7 +126,7 @@ def select_list():
     # Display the available lists
     print("Available lists:")
     for index, file in enumerate(csv_files, start=1):
-        print(f"{index}. {file}")  # Remove the file extension (.csv)
+        print(f"{index}. {file[:-4]}")  # Remove the file extension (.csv)
     
     # Ask the user to select a list
     while True:
@@ -145,48 +136,18 @@ def select_list():
             index = int(choice) - 1
             if 0 <= index < len(csv_files):
                 selected_list = csv_files[index]
-                print(f"You have selected: {selected_list}")
-                # Get user's choices for food type and price range
-                food_type_choice = input("Choose the type of food (1-9): ")
-                price_range_choice = input("Choose the price range (1-4): ")
-                # Filter restaurant options based on user's choices
-                options = filter_restaurant_options(selected_list, food_type_choice, price_range_choice)
-                if options:
-                    # Perform a random roll and select a restaurant
-                    selected_restaurant = random.choice(options)
-                    print(f"Let's go for {selected_restaurant}")
-                else:
-                    print("No restaurants match your criteria. Please try again.")
+                print(f"You have selected: {selected_list[:-4]}")
+                # Your code to perform operations on the selected list goes here
                 break
             else:
                 print("Invalid choice. Please enter a number between 1 and {}.".format(len(csv_files)))
         else:
             print("Invalid input. Please enter a number.")
 
-# Function to filter restaurant options based on user's choices
-def filter_restaurant_options(list_name, food_type_choice, price_range_choice):
-    # Open the selected CSV file
-    with open(f"{list_name}.csv", mode='r', newline='') as file:
-        reader = csv.reader(file)
-        next(reader)  # Skip the header row
-        filtered_options = []
-        logging.info(reader)
-
-        # Filter restaurant options based on user's choices
-        for row in reader:
-            restaurant_name, type_of_food, price = row
-            food_filter = FoodTypeFilter(food_type_choice)
-            price_filter = PriceRangeFilter(price_range_choice)
-            if food_filter.filter(row) and price_filter.filter(row):
-                filtered_options.append(restaurant_name)
-
-        return filtered_options
-
-# Function to check if the input contains only allowed characters
-def is_valid_input(input_string):
-    # Regular expression to match only alphanumeric characters and hyphen
-    pattern = r'^[a-zA-Z0-9\-]+$'
-    return bool(re.match(pattern, input_string))
+# Function to add or remove options
+def add_or_remove_options():
+    print("Adding or removing options...")
+    # Your code for adding or removing options goes here
 
 # Main function to run the program
 def main():
