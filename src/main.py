@@ -1,14 +1,14 @@
 import csv, random, os, re
-from filter import FoodTypeFilter, PriceRangeFilter
+from filter import FoodTypeFilter, PriceRangeFilter # Importing the filter classes
 
 food_types = ["Steakhouse", "Italian", "Japanese", "Cafe", "Vegetarian", "Mexican", "Chinese", "Other"]
 price_ranges = ["Cheap", "Mid-range", "Expensive"]
 
 # Function to print welcome message
 def display_welcome_message():
-    print("Welcome to the Random Restaurant Generator!")
+    print("\nWelcome to the Random Restaurant Generator!")
     print("This tool will help you find a restaurant based on your preferences.")
-    print("Let's get started!\n")
+    print("Let's get started!")
 
 # Call the function to display the welcome message
 display_welcome_message()
@@ -114,7 +114,7 @@ def create_new_list():
 
 # Function to select a list
 def select_list():
-    print("Selecting a list...")
+    print("\nSelecting a list...")
     # Get a list of all CSV files in the current directory
     csv_files = [file[:-4] for file in os.listdir() if file.endswith('.csv')]
     
@@ -123,7 +123,7 @@ def select_list():
         return
     
     # Display the available lists
-    print("Available lists:")
+    print("\nAvailable lists:")
     for index, file in enumerate(csv_files, start=1):
         print(f"{index}. {file}")  # Remove the file extension (.csv)
     
@@ -139,22 +139,45 @@ def select_list():
 
                 # Get user's choices for food type and price range
                 while True:
-                    food_type_choice = input("Choose the type of food (1-9): ")
-                    
-                    if food_type_choice in ['1', '2', '3', '4', '5', '6', '7', '8']:
-                        selected_food_type = food_types[int(food_type_choice) - 1]
+                    print("\nChoose the type of food:")
+                    print("1. Steakhouse")
+                    print("2. Italian")
+                    print("3. Japanese")
+                    print("4. Cafe")
+                    print("5. Vegetarian")
+                    print("6. Mexican")
+                    print("7. Chinese")
+                    print("8. Other")
+                    print("9. No idea")  # Add 'No idea' option
+                    food_type_choice = input("Enter your choice (1-9): ")
+
+                    if food_type_choice in ['1', '2', '3', '4', '5', '6', '7', '8', '9']:
+                        if food_type_choice == '9':
+                            selected_food_type = "No idea"
+                        else:
+                            selected_food_type = food_types[int(food_type_choice) - 1]
                         break
                     else:
-                        print("Invalid choice. Please choose a number between 1 and 8.")
+                        print("Invalid choice. Please choose a number between 1 and 9.")
+
 
                 while True:
-                    price_range_choice = input("Choose the price range (1-4): ")
-                    
-                    if price_range_choice in ['1', '2', '3']:
-                        selected_price_range_choice = price_ranges[int(price_range_choice) - 1]
+                    print("\nChoose the price range:")
+                    print("1. Cheap")
+                    print("2. Mid-range")
+                    print("3. Expensive")
+                    print("4. Any price")  # Add 'Any price' option
+                    price_range_choice = input("Enter your choice (1-4): ")
+
+                    if price_range_choice in ['1', '2', '3', '4']:
+                        if price_range_choice == '4':
+                            selected_price_range_choice = "Any price"
+                        else:
+                            selected_price_range_choice = price_ranges[int(price_range_choice) - 1]
                         break
                     else:
-                        print("Invalid choice. Please choose a number between 1 and 3.")
+                        print("Invalid choice. Please choose a number between 1 and 4.")
+
             
                 # Filter restaurant options based on user's choices
                 options = filter_restaurant_options(selected_list, selected_food_type, selected_price_range_choice)
@@ -172,7 +195,6 @@ def select_list():
             print("Invalid input. Please enter a number.")
 
 def filter_restaurant_options(list_name, food_type, price_range):
-    print(food_type, price_range)
     # Open the CSV file
     with open(f"{list_name}.csv", mode='r', newline='') as file:
         reader = csv.reader(file)
@@ -186,10 +208,27 @@ def filter_restaurant_options(list_name, food_type, price_range):
                 restaurant_name = row
                 food_filter = FoodTypeFilter(food_type)
                 price_filter = PriceRangeFilter(price_range)
-                if food_filter.filter(row) and price_filter.filter(row):
-                    filtered_options.append(restaurant_name)
+
+                # Include all restaurants if "No idea" is selected for food type
+                if food_type.lower() == "no idea":
+                    # Apply price range filter if "Any price" is not selected
+                    if price_range.lower() != "any price":
+                        if price_filter.filter(row):
+                            filtered_options.append(restaurant_name)
+                    else:
+                        filtered_options.append(restaurant_name)
+                else:
+                    # Apply food type filter
+                    if food_filter.filter(row):
+                        # Apply price range filter if "Any price" is not selected
+                        if price_range.lower() != "any price":
+                            if price_filter.filter(row):
+                                filtered_options.append(restaurant_name)
+                        else:
+                            filtered_options.append(restaurant_name)
 
         return filtered_options
+
 
 # Main function to run the program
 def main():
