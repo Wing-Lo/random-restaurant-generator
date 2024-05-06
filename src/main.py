@@ -17,8 +17,8 @@ display_welcome_message()
 def display_menu():
     print("\nMenu Options:")
     print("1. Create a new list")
-    print("2. Select a list")
-    print("3. Add or remove options")
+    print("2. Select a to roll")
+    print("3. Add or remove")
     print("4. Exit")
 
 # Function to adjust filename to lowercase and replace spaces with hyphens
@@ -249,14 +249,17 @@ def add_or_remove_options():
         print("No lists found. Please create a list first.")
         return
 
-    # Display the available lists
-    print("\nAvailable lists:")
-    for index, file in enumerate(csv_files, start=1):
-        print(f"{index}. {file}")  # Remove the file extension (.csv)
-
-    # Ask the user to select a list to edit
     while True:
-        choice = input("Enter the number of the list you want to edit (1-{}): ".format(len(csv_files)))
+        # Display the available lists
+        print("\nAvailable lists:")
+        for index, file in enumerate(csv_files, start=1):
+            print(f"{index}. {file}")  # Remove the file extension (.csv)
+
+        # Ask the user to select a list to edit
+        choice = input("Enter the number of the list you want to edit (1-{}), or 0 to go back: ".format(len(csv_files)))
+
+        if choice == '0':
+            return
 
         if choice.isdigit():
             index = int(choice) - 1
@@ -269,14 +272,15 @@ def add_or_remove_options():
                 with open(f"{selected_list}.csv", mode='r', newline='') as file:
                     reader = csv.reader(file)
                     next(reader)  # Skip the header row
-                    for i, row in enumerate(reader, start=1):
+                    restaurants = list(reader)
+                    for i, row in enumerate(restaurants, start=1):
                         print(f"{i}. {', '.join(row)}")
 
                 while True:
                     print("\nOptions:")
                     print("1. Add another restaurant")
                     print("2. Remove a restaurant")
-                    print("3. Back to menu")
+                    print("3. Save")
                     option = input("Enter your choice (1-3): ")
 
                     if option == '1':
@@ -306,18 +310,57 @@ def add_or_remove_options():
                                 with open(f"{selected_list}.csv", mode='a', newline='') as file:
                                     writer = csv.writer(file)
                                     writer.writerow([restaurant_name, food_type, price_range])
-                                print("Restaurant added successfully!")
+                                print("\nRestaurant added successfully!")
+
+                                # Print the updated list
+                                print("\nHere is your new list:")
+                                with open(f"{selected_list}.csv", mode='r', newline='') as file:
+                                    reader = csv.reader(file)
+                                    next(reader)  # Skip the header row
+                                    for i, row in enumerate(reader, start=1):
+                                        print(f"{i}. {', '.join(row)}")
                                 break  # Exit the loop after adding the restaurant
                             else:
                                 print("Invalid price range choice. Please choose a number between 1 and 3.")
 
                     elif option == '2':
                         # Remove a restaurant
-                        print("This feature is not yet implemented.")
-                        continue
+                        print("\nRemoving a restaurant...")
+
+                        # Print the list again
+                        print(f"\nHere is your list: {selected_list}")
+
+                        # Print the contents of the selected CSV list
+                        print("\nRestaurants in the list:")
+                        for i, row in enumerate(restaurants, start=1):
+                            print(f"{i}. {', '.join(row)}")
+
+                        # Ask for the number of the restaurant to remove
+                        while True:
+                            remove_choice = input("\nEnter the number of the restaurant you want to remove: ")
+                            if remove_choice.isdigit() and 1 <= int(remove_choice) <= len(restaurants):
+                                remove_index = int(remove_choice) - 1
+                                break
+                            else:
+                                print("Invalid choice. Please enter a valid number.")
+
+                        # Remove the selected restaurant
+                        del restaurants[remove_index]
+
+                        # Update the CSV file
+                        with open(f"{selected_list}.csv", mode='w', newline='') as file:
+                            writer = csv.writer(file)
+                            writer.writerow(["Restaurant Name", "Type of Food", "Price"])  # Rewrite the header
+                            writer.writerows(restaurants)
+
+                        # Print updated list
+                        print("\nRestaurant removed successfully!\n")
+                        print("Here is your new list:")
+                        for i, row in enumerate(restaurants, start=1):
+                            print(f"{i}. {', '.join(row)}")
 
                     elif option == '3':
-                        # Back to menu
+                        # Save
                         return
 
                     else:
