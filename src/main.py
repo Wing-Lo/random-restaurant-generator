@@ -35,10 +35,10 @@ def is_valid_input(input_string):
 
 # Function to create a new list
 def create_new_list():
-    print("Creating a new list...")
+    print("\nCreating a new list...")
     while True:
         # Ask the user for the name of the new list
-        list_name = input("Enter the name of the new list: ")
+        list_name = input("\nEnter the name of the new list: ")
         
         # Check if the input contains only allowed characters
         if not is_valid_input(list_name):
@@ -103,7 +103,7 @@ def create_new_list():
                 if next_action == '1':
                     continue
                 elif next_action == '2':
-                    print("List saved successfully!")
+                    print("\nList saved successfully!")
                     return True  # Signal to return to the menu options
                 elif next_action == '3':
                     print("List saved successfully! Exiting the program.")
@@ -140,14 +140,8 @@ def select_list():
                 # Get user's choices for food type and price range
                 while True:
                     print("\nChoose the type of food:")
-                    print("1. Steakhouse")
-                    print("2. Italian")
-                    print("3. Japanese")
-                    print("4. Cafe")
-                    print("5. Vegetarian")
-                    print("6. Mexican")
-                    print("7. Chinese")
-                    print("8. Other")
+                    for index, food_type in enumerate(food_types, start=1):
+                        print(f"{index}. {food_type}")
                     print("9. No idea")  # Add 'No idea' option
                     food_type_choice = input("Enter your choice (1-9): ")
 
@@ -160,12 +154,10 @@ def select_list():
                     else:
                         print("Invalid choice. Please choose a number between 1 and 9.")
 
-
                 while True:
                     print("\nChoose the price range:")
-                    print("1. Cheap")
-                    print("2. Mid-range")
-                    print("3. Expensive")
+                    for index, price_range in enumerate(price_ranges, start=1):
+                        print(f"{index}. {price_range}")
                     print("4. Any price")  # Add 'Any price' option
                     price_range_choice = input("Enter your choice (1-4): ")
 
@@ -178,17 +170,35 @@ def select_list():
                     else:
                         print("Invalid choice. Please choose a number between 1 and 4.")
 
-            
-                # Filter restaurant options based on user's choices
-                options = filter_restaurant_options(selected_list, selected_food_type, selected_price_range_choice)
+                while True:
+                    # Filter restaurant options based on user's choices
+                    options = filter_restaurant_options(selected_list, selected_food_type, selected_price_range_choice)
 
-                if options:
-                    # Perform a random roll and select a restaurant
-                    selected_restaurant = random.choice(options)
-                    print(f"\nLet's go for {selected_restaurant[0]}")
-                else:
-                    print("No restaurants match your criteria. Please try again.")
-                break
+                    if options:
+                        # Perform a random roll and select a restaurant
+                        selected_restaurant = random.choice(options)
+                        print(f"\nLet's go for {selected_restaurant[0]}")
+                        
+                        # Offer options after rolling the result
+                        print("\nOptions after getting the rolling result:")
+                        print("1. Done")
+                        print("2. Roll it again")
+                        print("3. Back to menu options")
+                        
+                        while True:
+                            option_choice = input("Enter your choice (1-3): ")
+                            if option_choice == '1':
+                                print("Exiting the program. Goodbye!")
+                                exit()  # Exit the program
+                            elif option_choice == '2':
+                                break  # Break to continue to the next iteration of the loop to re-roll
+                            elif option_choice == '3':
+                                return  # Return to the menu options
+                            else:
+                                print("Invalid choice. Please enter a number between 1 and 3.")
+                    else:
+                        print("No restaurants match your criteria. Please try again.")
+                        break
             else:
                 print("Invalid choice. Please enter a number between 1 and {}.".format(len(csv_files)))
         else:
@@ -228,7 +238,6 @@ def filter_restaurant_options(list_name, food_type, price_range):
                             filtered_options.append(restaurant_name)
 
         return filtered_options
-
 
 # Main function to run the program
 def main():
