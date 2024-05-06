@@ -16,9 +16,9 @@ display_welcome_message()
 # Function to display the menu options
 def display_menu():
     print("\nMenu Options:")
-    print("1. Create a new list")
-    print("2. Select a to roll")
-    print("3. Add or remove")
+    print("1. Create a new restaurant list")
+    print("2. Select a restaurant list to roll")
+    print("3. Add or remove restaurant")
     print("4. Exit")
 
 # Function to adjust filename to lowercase and replace spaces with hyphens
@@ -183,7 +183,7 @@ def select_list():
                         print("\nNext Steps:")
                         print("1. Done")
                         print("2. Roll it again")
-                        print("3. Back to menu options")
+                        print("3. Exit")
                         
                         while True:
                             option_choice = input("Enter your choice (1-3): ")
@@ -280,10 +280,17 @@ def add_or_remove_options():
                     print("\nOptions:")
                     print("1. Add another restaurant")
                     print("2. Remove a restaurant")
-                    print("3. Save")
+                    print("3. Exit")
                     option = input("Enter your choice (1-3): ")
 
                     if option == '1':
+
+                        # Retrieve the latest list of restaurants
+                        with open(f"{selected_list}.csv", mode='r', newline='') as file:
+                            reader = csv.reader(file)
+                            next(reader)  # Skip the header row
+                            restaurants = list(reader)
+
                         # Add another restaurant
                         while True:
                             restaurant_name = input("Enter the restaurant name: ")
@@ -332,8 +339,12 @@ def add_or_remove_options():
 
                         # Print the contents of the selected CSV list
                         print("\nRestaurants in the list:")
-                        for i, row in enumerate(restaurants, start=1):
-                            print(f"{i}. {', '.join(row)}")
+                        with open(f"{selected_list}.csv", mode='r', newline='') as file:
+                            reader = csv.reader(file)
+                            next(reader)  # Skip the header row
+                            restaurants = list(reader)
+                            for i, row in enumerate(restaurants, start=1):
+                                print(f"{i}. {', '.join(row)}")
 
                         # Ask for the number of the restaurant to remove
                         while True:
@@ -379,14 +390,14 @@ def main():
         if choice == '1':
             should_return_to_menu = create_new_list()
             if not should_return_to_menu:
-                print("Exiting the program. Goodbye!")
+                print("\nExiting the program. Goodbye!")
                 break
         elif choice == '2':
             select_list()
         elif choice == '3':
             add_or_remove_options()
         elif choice == '4':
-            print("Exiting the program. Goodbye!")
+            print("\nExiting the program. Goodbye!")
             break
         else:
             print("Invalid choice. Please enter a number between 1 and 4.")
