@@ -180,7 +180,7 @@ def select_list():
                         print(f"\nLet's go for {selected_restaurant[0]}")
                         
                         # Offer options after rolling the result
-                        print("\nOptions after getting the rolling result:")
+                        print("\nNext Steps:")
                         print("1. Done")
                         print("2. Roll it again")
                         print("3. Back to menu options")
@@ -238,6 +238,94 @@ def filter_restaurant_options(list_name, food_type, price_range):
                             filtered_options.append(restaurant_name)
 
         return filtered_options
+
+def add_or_remove_options():
+    print("\nAdding or Removing Options...")
+
+    # Get a list of all CSV files in the current directory
+    csv_files = [file[:-4] for file in os.listdir() if file.endswith('.csv')]
+
+    if not csv_files:
+        print("No lists found. Please create a list first.")
+        return
+
+    # Display the available lists
+    print("\nAvailable lists:")
+    for index, file in enumerate(csv_files, start=1):
+        print(f"{index}. {file}")  # Remove the file extension (.csv)
+
+    # Ask the user to select a list to edit
+    while True:
+        choice = input("Enter the number of the list you want to edit (1-{}): ".format(len(csv_files)))
+
+        if choice.isdigit():
+            index = int(choice) - 1
+            if 0 <= index < len(csv_files):
+                selected_list = csv_files[index]
+                print(f"\nHere is your list: {selected_list}")
+
+                # Print the contents of the selected CSV list
+                print("\nRestaurants in the list:")
+                with open(f"{selected_list}.csv", mode='r', newline='') as file:
+                    reader = csv.reader(file)
+                    next(reader)  # Skip the header row
+                    for i, row in enumerate(reader, start=1):
+                        print(f"{i}. {', '.join(row)}")
+
+                while True:
+                    print("\nOptions:")
+                    print("1. Add another restaurant")
+                    print("2. Remove a restaurant")
+                    print("3. Back to menu")
+                    option = input("Enter your choice (1-3): ")
+
+                    if option == '1':
+                        # Add another restaurant
+                        while True:
+                            restaurant_name = input("Enter the restaurant name: ")
+                            print("\nChoose the type of food:")
+                            for index, food_type in enumerate(food_types, start=1):
+                                print(f"{index}. {food_type}")
+                            food_type_choice = input("Enter your choice (1-8): ")
+
+                            if food_type_choice.isdigit() and 1 <= int(food_type_choice) <= 8:
+                                food_type = food_types[int(food_type_choice) - 1]
+                            else:
+                                print("Invalid food type choice. Please choose a number between 1 and 8.")
+                                continue
+
+                            print("\nChoose the price range:")
+                            for index, price_range in enumerate(price_ranges, start=1):
+                                print(f"{index}. {price_range}")
+                            price_range_choice = input("Enter your choice (1-3): ")
+
+                            if price_range_choice.isdigit() and 1 <= int(price_range_choice) <= 3:
+                                price_range = price_ranges[int(price_range_choice) - 1]
+
+                                # Append the new restaurant to the CSV file
+                                with open(f"{selected_list}.csv", mode='a', newline='') as file:
+                                    writer = csv.writer(file)
+                                    writer.writerow([restaurant_name, food_type, price_range])
+                                print("Restaurant added successfully!")
+                                break  # Exit the loop after adding the restaurant
+                            else:
+                                print("Invalid price range choice. Please choose a number between 1 and 3.")
+
+                    elif option == '2':
+                        # Remove a restaurant
+                        print("This feature is not yet implemented.")
+                        continue
+
+                    elif option == '3':
+                        # Back to menu
+                        return
+
+                    else:
+                        print("Invalid option. Please choose a number between 1 and 3.")
+            else:
+                print("Invalid choice. Please enter a number between 1 and {}.".format(len(csv_files)))
+        else:
+            print("Invalid input. Please enter a number.")
 
 # Main function to run the program
 def main():
