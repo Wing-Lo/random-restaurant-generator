@@ -58,7 +58,7 @@ def create_new_list():
 
             while True:
                 # Ask the user for restaurant name
-                restaurant_name = input("Enter the restaurant name: ")
+                restaurant_name = input("Enter the restaurant name that you would like to add: ")
 
                 # Ask the user to choose the type of food
                 print("\nChoose the type of food:")
@@ -110,8 +110,8 @@ def create_new_list():
                     print("\nList saved successfully! Exiting the program.")
                     return False  # Signal to exit the program
                 else:
-                    print("\nInvalid choice. Exiting without saving.")
-                    return False  # Signal to exit the program
+                    print("\nInvalid choice. Please choose from options 1-3.")
+                    continue
 
 # Function to select a list
 def select_list():
