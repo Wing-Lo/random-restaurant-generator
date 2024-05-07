@@ -4,6 +4,17 @@ from filter import FoodTypeFilter, PriceRangeFilter # Importing the filter class
 food_types = ["Steakhouse", "Italian", "Japanese", "Cafe", "Vegetarian", "Mexican", "Chinese", "Other"]
 price_ranges = ["Cheap", "Mid-range", "Expensive"]
 
+def read_and_display_restaurants(filename):
+    print("\nRestaurants in the selected list:")
+    try:
+        with open(filename + '.csv', 'r', newline='', encoding='utf-8') as csvfile:
+            reader = csv.reader(csvfile)
+            next(reader)
+            for index, row in enumerate(reader, start=1):
+                print(f"{index}. {', '.join(row)}")
+    except FileNotFoundError:
+        print("File not found. Please make sure the file exists.")
+
 # Function to print welcome message
 def display_welcome_message():
     print("\nWelcome to the Random Restaurant Generator!")
@@ -16,10 +27,10 @@ display_welcome_message()
 # Function to display the menu options
 def display_menu():
     print("\nMenu:")
-    print("1. Create new list")
-    print("2. Select to roll")
-    print("3. Edit list")
-    print("4. Remove list")
+    print("1. Create a new restaurant list")
+    print("2. Select a restaurant to roll")
+    print("3. Edit restaurant list")
+    print("4. Remove restaurant list")
     print("5. Exit Program")
 
 # Function to adjust filename to lowercase and replace spaces with hyphens
@@ -39,7 +50,7 @@ def create_new_list():
     print("\nCreating a new list...")
     while True:
         # Ask the user for the name of the new list
-        list_name = input("\nEnter the name of the new list: ")
+        list_name = input("\nEnter the name of the new restaurant list: ")
         
         # Check if the input contains only allowed characters
         if not is_valid_input(list_name):
@@ -50,7 +61,7 @@ def create_new_list():
         list_name = adjust_filename(list_name)
 
         # Open a new CSV file with the adjusted list name
-        with open(f"{list_name}.csv", mode='w', newline='') as file:
+        with open(f"{list_name}.csv", mode='w', newline='', encoding="utf-8") as file:
             writer = csv.writer(file)
 
             # Write the header row
@@ -58,46 +69,54 @@ def create_new_list():
 
             while True:
                 # Ask the user for restaurant name
-                restaurant_name = input("Enter the restaurant name that you would like to add: ")
+                restaurant_name = input("\nEnter the restaurant name that you would like to add: ")
 
-                # Ask the user to choose the type of food
-                print("\nChoose the type of food:")
-                print("1. Steakhouse")
-                print("2. Italian")
-                print("3. Japanese")
-                print("4. Cafe")
-                print("5. Vegetarian")
-                print("6. Mexican")
-                print("7. Chinese")
-                print("8. Other")
-                food_choice = input("Enter your choice: ")
+                while True:
+                    # Ask the user to choose the type of food
+                    print("\nChoose the type of food:")
+                    print("1. Steakhouse")
+                    print("2. Italian")
+                    print("3. Japanese")
+                    print("4. Cafe")
+                    print("5. Vegetarian")
+                    print("6. Mexican")
+                    print("7. Chinese")
+                    print("8. Other")
+                    food_choice = input("Enter your choice: ")
 
-                if food_choice in ['1', '2', '3', '4', '5', '6', '7', '8']:
-                    food_type = food_types[int(food_choice) - 1]
-                else:
-                    print("\nInvalid choice. Please choose a number between 1 and 8.")
-                    continue
+                    if food_choice in ['1', '2', '3', '4', '5', '6', '7', '8']:
+                        food_type = food_types[int(food_choice) - 1]
+                        break
+                    else:
+                        print("\nInvalid choice. Please choose a number between 1 and 8.")
+                        
+                while True:
+                    # Ask the user to choose the price range
+                    print("\nChoose the price range:")
+                    print("1. Cheap")
+                    print("2. Mid-range")
+                    print("3. Expensive")
+                    price_choice = input("Enter your choice: ")
 
-                # Ask the user to choose the price range
-                print("\nChoose the price range:")
-                print("1. Cheap")
-                print("2. Mid-range")
-                print("3. Expensive")
-                price_choice = input("Enter your choice: ")
-
-                if price_choice in ['1', '2', '3']:
-                    price_range = price_ranges[int(price_choice) - 1]
-                else:
-                    print("\nInvalid choice. Please choose a number between 1 and 3.")
-                    continue
+                    if price_choice in ['1', '2', '3']:
+                        price_range = price_ranges[int(price_choice) - 1]
+                        break
+                    else:
+                        print("\nInvalid choice. Please choose a number between 1 and 3.")
 
                 # Write the restaurant details to the CSV file
                 writer.writerow([restaurant_name, food_type, price_range])
 
+                # Explicitly flush and close the file to ensure all data is written
+                file.flush()
+                file.close()
+
+                read_and_display_restaurants(list_name)
+
                 # Ask the user for next action
                 print("\nNext Steps:")
                 print("1. Enter another restaurant")
-                print("2. Save")
+                print("2. Save and back to menu")
                 print("3. Exit program")
                 next_action = input("Enter your choice: ")
 
@@ -112,6 +131,7 @@ def create_new_list():
                 else:
                     print("\nInvalid choice. Please choose from options 1-3.")
                     continue
+
 
 # Function to select a list
 def select_list():
@@ -207,7 +227,7 @@ def select_list():
 
 def filter_restaurant_options(list_name, food_type, price_range):
     # Open the CSV file
-    with open(f"{list_name}.csv", mode='r', newline='') as file:
+    with open(f"{list_name}.csv", mode="r", newline="", encoding="utf-8") as file:
         reader = csv.reader(file)
         next(reader)  # Skip the header row
 
@@ -270,7 +290,7 @@ def edit_list():
 
                 # Print the contents of the selected CSV list
                 print("\nRestaurants:")
-                with open(f"{selected_list}.csv", mode='r', newline='') as file:
+                with open(f"{selected_list}.csv", mode="r", newline="") as file:
                     reader = csv.reader(file)
                     next(reader)  # Skip the header row
                     restaurants = list(reader)
@@ -287,7 +307,7 @@ def edit_list():
                     if option == '1':
 
                         # Retrieve the latest list of restaurants
-                        with open(f"{selected_list}.csv", mode='r', newline='') as file:
+                        with open(f"{selected_list}.csv", mode="r", newline="", encoding="utf-8") as file:
                             reader = csv.reader(file)
                             next(reader)  # Skip the header row
                             restaurants = list(reader)
@@ -315,14 +335,14 @@ def edit_list():
                                 price_range = price_ranges[int(price_range_choice) - 1]
 
                                 # Append the new restaurant to the CSV file
-                                with open(f"{selected_list}.csv", mode='a', newline='') as file:
+                                with open(f"{selected_list}.csv", mode="a", newline="", encoding="utf-8") as file:
                                     writer = csv.writer(file)
                                     writer.writerow([restaurant_name, food_type, price_range])
                                 print("\nRestaurant added successfully!")
 
                                 # Print the updated list
                                 print("\nHere is your new list:")
-                                with open(f"{selected_list}.csv", mode='r', newline='') as file:
+                                with open(f"{selected_list}.csv", mode="r", newline="", encoding="utf-8") as file:
                                     reader = csv.reader(file)
                                     next(reader)  # Skip the header row
                                     for i, row in enumerate(reader, start=1):
@@ -340,7 +360,7 @@ def edit_list():
 
                         # Print the contents of the selected CSV list
                         print("\nRestaurants:")
-                        with open(f"{selected_list}.csv", mode='r', newline='') as file:
+                        with open(f"{selected_list}.csv", mode="r", newline="", encoding="utf-8") as file:
                             reader = csv.reader(file)
                             next(reader)  # Skip the header row
                             restaurants = list(reader)
@@ -383,13 +403,54 @@ def edit_list():
             print("\nInvalid input. Please enter a number.")
 
 def remove_list():
-    pass
+    print("\nRemoving a list...")
+    
+    # Get a list of all CSV files in the current directory
+    csv_files = [file[:-4] for file in os.listdir() if file.endswith('.csv')]
+    
+    if not csv_files:
+        print("No lists found.")
+        return
+    
+    while True:
+        # Display the available lists with numbers
+        print("\nRestaurant lists:")
+        for index, file in enumerate(csv_files, start=1):
+            print(f"{index}. {file}")
+
+        # Ask the user to select a list to remove
+        choice = input("Enter the number of the list you want to remove (1-{}), or enter 0 to exit: ".format(len(csv_files)))
+        
+        if choice == '0':
+            return
+
+        if choice.isdigit():
+            index = int(choice) - 1
+            if 0 <= index < len(csv_files):
+                selected_list = csv_files[index]
+                print(f"\nAre you sure to remove your list: {selected_list}?")
+
+                # Ask for confirmation
+                confirmation = input("Enter 'yes' to confirm or 'no' to cancel: ").lower()
+                if confirmation == 'yes':
+                    # Remove the CSV file
+                    os.remove(f"{selected_list}.csv")
+                    print(f"\nYour list: {selected_list} has been removed.")
+                    return
+                elif confirmation == 'no':
+                    print("Please select another list to remove or enter 0 to exit.")
+                else:
+                    print("Invalid input. Please enter 'yes' or 'no'.")
+            else:
+                print("Invalid choice. Please enter a number between 1 and {}.".format(len(csv_files)))
+        else:
+            print("Invalid input. Please enter a number.")
 
 # Main function to run the program
 def main():
     while True:
         display_menu()
-        choice = input("Please enter the number of your choice (1-4): ")
+        choice = input("Please enter the number of your choice (1-5): ")
 
         if choice == '1':
             should_return_to_menu = create_new_list()
@@ -406,7 +467,7 @@ def main():
             print("\nExiting the program. Goodbye!")
             break
         else:
-            print("\nInvalid choice. Please enter a number between 1 and 4.")
+            print("\nInvalid choice. Please enter a number between 1 and 5.")
 
 # Run the main function
 if __name__ == "__main__":
