@@ -5,7 +5,7 @@ food_types = ["Steakhouse", "Italian", "Japanese", "Cafe", "Vegetarian", "Mexica
 price_ranges = ["Cheap", "Mid-range", "Expensive"]
 
 def read_and_display_restaurants(filename):
-    print("\nRestaurants in the selected list:")
+    print("Restaurants in the selected list:")
     try:
         with open(filename + '.csv', 'r', newline='', encoding='utf-8') as csvfile:
             reader = csv.reader(csvfile)
@@ -66,71 +66,71 @@ def create_new_list():
 
             # Write the header row
             writer.writerow(["Restaurant Name", "Type of Food", "Price"])
+            
+
+        while True:
+            # Ask the user for restaurant name
+            restaurant_name = input("Enter the restaurant name that you would like to add: ")
 
             while True:
-                # Ask the user for restaurant name
-                restaurant_name = input("\nEnter the restaurant name that you would like to add: ")
+                # Ask the user to choose the type of food
+                print("\nChoose the type of food:")
+                print("1. Steakhouse")
+                print("2. Italian")
+                print("3. Japanese")
+                print("4. Cafe")
+                print("5. Vegetarian")
+                print("6. Mexican")
+                print("7. Chinese")
+                print("8. Other")
+                food_choice = input("Enter your choice: ")
 
-                while True:
-                    # Ask the user to choose the type of food
-                    print("\nChoose the type of food:")
-                    print("1. Steakhouse")
-                    print("2. Italian")
-                    print("3. Japanese")
-                    print("4. Cafe")
-                    print("5. Vegetarian")
-                    print("6. Mexican")
-                    print("7. Chinese")
-                    print("8. Other")
-                    food_choice = input("Enter your choice: ")
+                if food_choice in ['1', '2', '3', '4', '5', '6', '7', '8']:
+                    food_type = food_types[int(food_choice) - 1]
+                    break
+                else:
+                    print("\nInvalid choice. Please choose a number between 1 and 8.")
+                    
+            while True:
+                # Ask the user to choose the price range
+                print("\nChoose the price range:")
+                print("1. Cheap")
+                print("2. Mid-range")
+                print("3. Expensive")
+                price_choice = input("Enter your choice: ")
 
-                    if food_choice in ['1', '2', '3', '4', '5', '6', '7', '8']:
-                        food_type = food_types[int(food_choice) - 1]
-                        break
-                    else:
-                        print("\nInvalid choice. Please choose a number between 1 and 8.")
-                        
-                while True:
-                    # Ask the user to choose the price range
-                    print("\nChoose the price range:")
-                    print("1. Cheap")
-                    print("2. Mid-range")
-                    print("3. Expensive")
-                    price_choice = input("Enter your choice: ")
+                if price_choice in ['1', '2', '3']:
+                    price_range = price_ranges[int(price_choice) - 1]
+                    break
+                else:
+                    print("\nInvalid choice. Please choose a number between 1 and 3.")
 
-                    if price_choice in ['1', '2', '3']:
-                        price_range = price_ranges[int(price_choice) - 1]
-                        break
-                    else:
-                        print("\nInvalid choice. Please choose a number between 1 and 3.")
-
+            with open(f"{list_name}.csv", mode='a', newline='', encoding="utf-8") as file:
+                writer = csv.writer(file)
+                
                 # Write the restaurant details to the CSV file
                 writer.writerow([restaurant_name, food_type, price_range])
 
-                # Explicitly flush and close the file to ensure all data is written
-                file.flush()
-                file.close()
+            read_and_display_restaurants(list_name)
 
-                read_and_display_restaurants(list_name)
+            # Ask the user for next action
+            print("\nNext Steps:")
+            print("1. Enter another restaurant")
+            print("2. Save and back to menu")
+            print("3. Exit program")
+            next_action = input("Enter your choice: ")
 
-                # Ask the user for next action
-                print("\nNext Steps:")
-                print("1. Enter another restaurant")
-                print("2. Save and back to menu")
-                print("3. Exit program")
-                next_action = input("Enter your choice: ")
-
-                if next_action == '1':
-                    continue
-                elif next_action == '2':
-                    print("\nList saved successfully!")
-                    return True  # Signal to return to the menu options
-                elif next_action == '3':
-                    print("\nList saved successfully! Exiting the program.")
-                    return False  # Signal to exit the program
-                else:
-                    print("\nInvalid choice. Please choose from options 1-3.")
-                    continue
+            if next_action == '1':
+                continue
+            elif next_action == '2':
+                print("\nList saved successfully!")
+                return True  # Signal to return to the menu options
+            elif next_action == '3':
+                print("\nList saved successfully! Exiting the program.")
+                return False  # Signal to exit the program
+            else:
+                print("\nInvalid choice. Please choose from options 1-3.")
+                continue
 
 
 # Function to select a list
