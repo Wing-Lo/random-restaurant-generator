@@ -15,11 +15,12 @@ display_welcome_message()
 
 # Function to display the menu options
 def display_menu():
-    print("\nMenu Options:")
-    print("1. Create a new restaurant list")
-    print("2. Select a restaurant list to roll")
-    print("3. Add or remove restaurant")
-    print("4. Exit")
+    print("\nMenu:")
+    print("1. Create new list")
+    print("2. Select to roll")
+    print("3. Edit list")
+    print("4. Remove list")
+    print("5. Exit Program")
 
 # Function to adjust filename to lowercase and replace spaces with hyphens
 def adjust_filename(filename):
@@ -42,7 +43,7 @@ def create_new_list():
         
         # Check if the input contains only allowed characters
         if not is_valid_input(list_name):
-            print("Error: List name can only contain alphanumeric characters and hyphens (-). Please try again.")
+            print("\nError: List name can only contain alphanumeric characters and hyphens (-). Please try again.")
             continue
         
         # Adjust filename
@@ -74,7 +75,7 @@ def create_new_list():
                 if food_choice in ['1', '2', '3', '4', '5', '6', '7', '8']:
                     food_type = food_types[int(food_choice) - 1]
                 else:
-                    print("Invalid choice. Please choose a number between 1 and 8.")
+                    print("\nInvalid choice. Please choose a number between 1 and 8.")
                     continue
 
                 # Ask the user to choose the price range
@@ -87,17 +88,17 @@ def create_new_list():
                 if price_choice in ['1', '2', '3']:
                     price_range = price_ranges[int(price_choice) - 1]
                 else:
-                    print("Invalid choice. Please choose a number between 1 and 3.")
+                    print("\nInvalid choice. Please choose a number between 1 and 3.")
                     continue
 
                 # Write the restaurant details to the CSV file
                 writer.writerow([restaurant_name, food_type, price_range])
 
                 # Ask the user for next action
-                print("\nOptions:")
+                print("\nNext Steps:")
                 print("1. Enter another restaurant")
                 print("2. Save")
-                print("3. Exit")
+                print("3. Exit program")
                 next_action = input("Enter your choice: ")
 
                 if next_action == '1':
@@ -106,10 +107,10 @@ def create_new_list():
                     print("\nList saved successfully!")
                     return True  # Signal to return to the menu options
                 elif next_action == '3':
-                    print("List saved successfully! Exiting the program.")
-                    return True  # Signal to exit the program
+                    print("\nList saved successfully! Exiting the program.")
+                    return False  # Signal to exit the program
                 else:
-                    print("Invalid choice. Exiting without saving.")
+                    print("\nInvalid choice. Exiting without saving.")
                     return False  # Signal to exit the program
 
 # Function to select a list
@@ -123,7 +124,7 @@ def select_list():
         return
     
     # Display the available lists
-    print("\nAvailable lists:")
+    print("\nRestaurant lists:")
     for index, file in enumerate(csv_files, start=1):
         print(f"{index}. {file}")  # Remove the file extension (.csv)
     
@@ -181,9 +182,9 @@ def select_list():
                         
                         # Offer options after rolling the result
                         print("\nNext Steps:")
-                        print("1. Done")
+                        print("1. Done and exit program")
                         print("2. Roll it again")
-                        print("3. Exit")
+                        print("3. Back to menu")
                         
                         while True:
                             option_choice = input("Enter your choice (1-3): ")
@@ -239,8 +240,8 @@ def filter_restaurant_options(list_name, food_type, price_range):
 
         return filtered_options
 
-def add_or_remove_options():
-    print("\nAdding or Removing Options...")
+def edit_list():
+    print("\nEditing list...")
 
     # Get a list of all CSV files in the current directory
     csv_files = [file[:-4] for file in os.listdir() if file.endswith('.csv')]
@@ -251,7 +252,7 @@ def add_or_remove_options():
 
     while True:
         # Display the available lists
-        print("\nAvailable lists:")
+        print("\nRestaurant lists:")
         for index, file in enumerate(csv_files, start=1):
             print(f"{index}. {file}")  # Remove the file extension (.csv)
 
@@ -268,7 +269,7 @@ def add_or_remove_options():
                 print(f"\nHere is your list: {selected_list}")
 
                 # Print the contents of the selected CSV list
-                print("\nRestaurants in the list:")
+                print("\nRestaurants:")
                 with open(f"{selected_list}.csv", mode='r', newline='') as file:
                     reader = csv.reader(file)
                     next(reader)  # Skip the header row
@@ -280,7 +281,7 @@ def add_or_remove_options():
                     print("\nOptions:")
                     print("1. Add another restaurant")
                     print("2. Remove a restaurant")
-                    print("3. Exit")
+                    print("3. Back to menu")
                     option = input("Enter your choice (1-3): ")
 
                     if option == '1':
@@ -302,7 +303,7 @@ def add_or_remove_options():
                             if food_type_choice.isdigit() and 1 <= int(food_type_choice) <= 8:
                                 food_type = food_types[int(food_type_choice) - 1]
                             else:
-                                print("Invalid food type choice. Please choose a number between 1 and 8.")
+                                print("\nInvalid food type choice. Please choose a number between 1 and 8.")
                                 continue
 
                             print("\nChoose the price range:")
@@ -338,7 +339,7 @@ def add_or_remove_options():
                         print(f"\nHere is your list: {selected_list}")
 
                         # Print the contents of the selected CSV list
-                        print("\nRestaurants in the list:")
+                        print("\nRestaurants:")
                         with open(f"{selected_list}.csv", mode='r', newline='') as file:
                             reader = csv.reader(file)
                             next(reader)  # Skip the header row
@@ -353,7 +354,7 @@ def add_or_remove_options():
                                 remove_index = int(remove_choice) - 1
                                 break
                             else:
-                                print("Invalid choice. Please enter a valid number.")
+                                print("\nInvalid choice. Please enter a valid number.")
 
                         # Remove the selected restaurant
                         del restaurants[remove_index]
@@ -375,11 +376,14 @@ def add_or_remove_options():
                         return
 
                     else:
-                        print("Invalid option. Please choose a number between 1 and 3.")
+                        print("\nInvalid option. Please choose a number between 1 and 3.")
             else:
-                print("Invalid choice. Please enter a number between 1 and {}.".format(len(csv_files)))
+                print("\nInvalid choice. Please enter a number between 1 and {}.".format(len(csv_files)))
         else:
-            print("Invalid input. Please enter a number.")
+            print("\nInvalid input. Please enter a number.")
+
+def remove_list():
+    pass
 
 # Main function to run the program
 def main():
@@ -395,12 +399,14 @@ def main():
         elif choice == '2':
             select_list()
         elif choice == '3':
-            add_or_remove_options()
+            edit_list()
         elif choice == '4':
+            remove_list()
+        elif choice == '5':
             print("\nExiting the program. Goodbye!")
             break
         else:
-            print("Invalid choice. Please enter a number between 1 and 4.")
+            print("\nInvalid choice. Please enter a number between 1 and 4.")
 
 # Run the main function
 if __name__ == "__main__":
