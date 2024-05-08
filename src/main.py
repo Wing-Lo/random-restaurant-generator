@@ -3,7 +3,6 @@ import random
 import os
 from constant import FOOD_TYPES, PRICE_RANGES, LIST_HEADER, CSV_LIST_NOT_FOUND_MESSAGE
 from utilise import read_and_display_restaurants, display_welcome_message, display_menu, get_csv_files, display_restaurant_list_options, filter_restaurant_options
-
 from validator import sanitise_filename, is_valid_input, invalid_input_message
 
 # Call the function to display the welcome message
@@ -80,7 +79,7 @@ def create_new_list():
             while True:
                 # Ask the user for next action
                 print("\nNext Steps:")
-                print("1. Enter another restaurant")
+                print("1. Add another restaurant")
                 print("2. Save and back to menu")
                 print("3. Exit program")
                 next_action = input("Enter your choice: ")
@@ -92,7 +91,7 @@ def create_new_list():
                     return True  # Signal to return to the menu options
                 elif next_action == '3':
                     print("\nList saved successfully! Exiting the program.")
-                    return False  # Signal to exit the program
+                    exit()  # Exit the program
                 else:
                     invalid_input_message(3)
                     continue
@@ -179,7 +178,7 @@ def select_list():
                             else:
                                 invalid_input_message(3)
                     else:
-                        print("No restaurants match your criteria. Please try again.")
+                        print("\nNo restaurants match your criteria. Please try again.")
                         break
             else:
                 invalid_input_message(len(csv_files))
@@ -369,7 +368,7 @@ def main():
                 remove_list()
             elif choice == '5':
                 print("\nExiting the program. Goodbye!")
-                break
+                exit()
             else:
                 invalid_input_message(5)
         else:
