@@ -83,7 +83,7 @@ Open your terminal and get into the right directory which has the README.md file
 
 ### 3. Python installation
 
-- Auto installation
+### - Auto installation
 
 Run the following command in your terminal.
 
@@ -97,7 +97,7 @@ or
 bash ./src/start.sh
 ```
 
-- Manual installation
+### - Manual installation
 
 This application requires Python 3.10 to be installed. To check the version of Python installed on your computer, execute the following command in terminal:
 
