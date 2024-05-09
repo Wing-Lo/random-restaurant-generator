@@ -6,7 +6,7 @@
 
 ## Code Style Guide
 
-This code was styled according to [the PEP 8 Style Guide.](https://peps.python.org/pep-0008/)
+This code was styled according to the [PEP 8 Style Guide.](https://peps.python.org/pep-0008/)
 
 Example of usage:
 
@@ -72,20 +72,20 @@ The implementation plan for this project is organized using Trello. The main boa
 
 ## Installation Guide
 
-### Steps to install the application
-
-#### 1. Download the application
+### 1. Download the application
 
 Download the application zip file from [Github](https://github.com/Wing-Lo/random-restaurant-generator).
 (Click the green button '< > Code' on the page and click 'Download ZIP')
 
-#### 2. Locate the file
+### 2. Locate the file
 
 Open your terminal and get into the right directory which has the README.md file.
 
-#### 3. Download Python and run the application
+### 3. Python installation
 
-- For an easy installation, run the following command in your terminal to open the application.
+- Auto installation
+
+Run the following command in your terminal.
 
 ```bash
 . ./src/start.sh
@@ -97,7 +97,7 @@ or
 bash ./src/start.sh
 ```
 
-- Install Python manually.
+- Manual installation
 
 This application requires Python 3.10 to be installed. To check the version of Python installed on your computer, execute the following command in terminal:
 
