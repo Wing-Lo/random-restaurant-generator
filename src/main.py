@@ -126,7 +126,10 @@ def select_list():
     while True:
         # Display the available lists
         display_restaurant_list_options(csv_files)
-        choice = input(f"\nEnter the number of the list you want to select (1-{format(len(csv_files))}): ")
+        choice = input(f"\nEnter the number of the list you want to select (1-{format(len(csv_files))}), or enter 0 to go back: ")
+
+        if choice == "0":
+            return
 
         if choice.isdigit():
             index = int(choice) - 1
@@ -350,7 +353,7 @@ def remove_list():
         display_restaurant_list_options(csv_files)
 
         # Ask the user to select a list to remove
-        choice = input(f"\nEnter the number of the list you want to remove (1-{len(csv_files)}), or enter 0 to exit: ")
+        choice = input(f"\nEnter the number of the list you want to remove (1-{len(csv_files)}), or enter 0 to go back: ")
 
         if choice == "0":
             return
@@ -370,7 +373,7 @@ def remove_list():
                         print(f"\nYour list: {selected_list} has been removed.")
                         return
                     elif confirmation == "no":
-                        print("Please select another list to remove or enter 0 to exit.")
+                        print("Please select another list to remove or enter 0 to go back.")
                         break
                     else:
                         print("\nInvalid input. Please enter 'yes' or 'no'.")
