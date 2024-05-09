@@ -74,7 +74,30 @@ The implementation plan for this project is organized using Trello. The main boa
 
 ### Steps to install the application
 
-1. Python
+#### 1. Download the application
+
+Download the application zip file from [Github](https://github.com/Wing-Lo/random-restaurant-generator).
+(Click the green button '< > Code' on the page and click 'Download ZIP')
+
+#### 2. Locate the file
+
+Open your terminal and get into the right directory which has the README.md file.
+
+#### 3. Download Python and run the application
+
+- For an easy installation, run the following command in your terminal to open the application.
+
+```bash
+. ./src/start.sh
+```
+
+or
+
+```bash
+bash ./src/start.sh
+```
+
+- Install Python manually.
 
 This application requires Python 3.10 to be installed. To check the version of Python installed on your computer, execute the following command in terminal:
 
@@ -83,6 +106,12 @@ python --version
 ```
 
 If you have an older version of Python or do not have Python installed, visit the [Python Download Page](https://www.python.org/downloads/).
+
+Once the python is installed, run the following command in your terminal to open the application.
+
+```bash
+python3 ./src/main.py
+```
 
 ### Dependencies required by the application to operate
 
@@ -98,7 +127,7 @@ This program recommends a modern operating system with either:
 
 ### Command line arguments for the application
 
-To run the application, please type the following command in your terminal.
+To run the application, please get into the right directory in your terminal and type the following command.
 
 ```bash
 python3 ./src/main.py
