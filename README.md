@@ -125,7 +125,7 @@ This program recommends a modern operating system with either:
 - Mac OS Monterey
 - Ubuntu 20.04
 
-### Command line arguments for the application
+### Run the application
 
 To run the application, please get into the right directory in your terminal and type the following command.
 
