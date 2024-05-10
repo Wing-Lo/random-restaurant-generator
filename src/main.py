@@ -245,7 +245,7 @@ def edit_list():
                         is_done_adding_restaurant = False  # Flag to indicate when to exit the outer loop
 
                         while not is_done_adding_restaurant:
-                            restaurant_name = input("Enter the restaurant name: ")
+                            restaurant_name = input("\nEnter the restaurant name: ")
                             
                             # Choose food type
                             while True:
