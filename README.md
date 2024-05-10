@@ -1,6 +1,6 @@
-# Random restaurant generator app
+# Random Restaurant Generator Application
 
-## Source control repository
+## Source Control Repository
 
 [Link to Github](https://github.com/Wing-Lo/random-restaurant-generator)
 
@@ -11,14 +11,14 @@ This code was styled according to the [PEP 8 Style Guide.](https://peps.python.o
 Example of usage:
 
 - Indentation: Use 4 spaces per indentation level.
-- Imports: Imports should usually be on separate lines.
+- Imports: Imports are on separate lines.
 - Inline Comments: Use inline comments sparingly.
 
-## Purpose of the application
+## Purpose of the Application
 
 The Random Restaurant Generator is a Python terminal app simplifying dining decisions. Users create personalized lists, categorize eateries, and roll random selections. Flexible editing allows for list management, ensuring evolving preferences. With streamlined decision-making, users enjoy culinary exploration effortlessly.
 
-## List of features
+## List of Features
 
 ### 1. Create a new restaurant list
 
@@ -72,52 +72,70 @@ The implementation plan for this project is organized using Trello. The main boa
 
 ## Installation Guide
 
-### 1. Download the application
+Welcome to the installation guide for Random Restaurant Generator. Follow these steps to get the application up and running on your system.
 
-Download the application zip file from [Github](https://github.com/Wing-Lo/random-restaurant-generator).
-(Click the green button '< > Code' on the page and click 'Download ZIP')
+### Step 1: Download the application
 
-### 2. Locate the file
+1. Navigate to the [GitHub](https://github.com/Wing-Lo/random-restaurant-generator) repository.
+2. Click the green `< > Code` button on the page.
+3. Select `Download ZIP` from the dropdown menu.
 
-Open your terminal and get into the right directory which has the README.md file.
+### Step 2: Extract the application
 
-### 3. Python installation
+1. Locate the downloaded ZIP file on your computer.
+2. Extract the contents of the ZIP file to a directory of your choice.
 
-### - Auto installation
+### Step 3: Execute the application
 
-Run the following command in your terminal.
+The application requires Python version 3.10. Follow the instructions below based on your execution preference.
+
+#### Automatic Execution
+
+Run the provided script to automate the execution process:
 
 ```bash
+cd path/to/extracted/folder
 . ./src/start.sh
 ```
 
-or
+Or, if the above doesn't work, try:
 
 ```bash
 bash ./src/start.sh
 ```
 
-### - Manual installation
+This script will check for Python 3.10, install it if necessary, and then execute the application automatically.
 
-This application requires Python 3.10 to be installed. To check the version of Python installed on your computer, execute the following command in terminal:
+#### Manual Execution
+
+To manually execute the application:
+
+1. Open your terminal.
+2. Check your current Python version:
 
 ```bash
 python --version
 ```
 
-If you have an older version of Python or do not have Python installed, visit the [Python Download Page](https://www.python.org/downloads/).
+3. If you have an older version or Python is not installed, visit the [Python Download Page](https://www.python.org/downloads/) and install Python 3.10 or the latest version.
+4. Once installed, verify the installation by checking the version again:
 
-Once the python is installed, run the following command in your terminal to open the application.
+```bash
+python3 --version
+```
+
+5. Navigate to the directory containing the application's files.
+6. Run the application with the following command:
 
 ```bash
 python3 ./src/main.py
 ```
 
-### Dependencies required by the application to operate
+### Dependencies
 
-No dependencies are required to operate the application. All necessary Python packages (csv, random, os, and re) are part of the Python Standard Library.
+No external dependencies are required to operate the application. All necessary Python packages (csv, random, os, and re) are included in the [Python Standard Library](https://docs.python.org/3/library/index.html).
 
-### System/hardware requirements
+### System/hardware Requirements
 
 This program recommends a modern operating system with either:
 
@@ -125,22 +143,18 @@ This program recommends a modern operating system with either:
 - Mac OS Monterey
 - Ubuntu 20.04
 
-### Run the application
-
-To run the application, please get into the right directory in your terminal and type the following command.
-
-```bash
-python3 ./src/main.py
-```
+Ensure that your system meets these requirements for optimal performance.
 
 ## References
 
-- Python Software Foundation (no date), 'csv — CSV File Reading and Writing', Python Documentation, viewed 5 May 2024, [https://docs.python.org/3/library/csv.html](https://docs.python.org/3/library/csv.html).
+- Python Software Foundation (n.d.), 'csv — CSV File Reading and Writing', Python Documentation. Retrieved from [https://docs.python.org/3/library/csv.html](https://docs.python.org/3/library/csv.html).
 
-- Python Software Foundation (no date), 'os — Miscellaneous operating system interfaces', Python Documentation, viewed 6 May 2024, [https://docs.python.org/3/library/os.html](https://docs.python.org/3/library/os.html).
+- Python Software Foundation (n.d.), 'os — Miscellaneous operating system interfaces', Python Documentation. Retrieved from [https://docs.python.org/3/library/os.html](https://docs.python.org/3/library/os.html).
 
-- Python Software Foundation (no date), 'PEP 8 -- Style Guide for Python Code', Python Enhancement Proposals, viewed 5 May 2024, [https://peps.python.org/pep-0008/](https://peps.python.org/pep-0008/).
+- Python Software Foundation (n.d.), 'PEP 8 -- Style Guide for Python Code', Python Enhancement Proposals. Retrieved from [https://peps.python.org/pep-0008/](https://peps.python.org/pep-0008/).
 
-- Python Software Foundation (no date), 'random — Generate pseudo-random numbers', Python Documentation, viewed 7 May 2024, [https://docs.python.org/3/library/random.html](https://docs.python.org/3/library/random.html).
+- Python Software Foundation. (n.d.). Python 3.10.2 documentation: Python Standard Library. Retrieved from [https://docs.python.org/3/library/index.html](https://docs.python.org/3/library/index.html).
 
-- Python Software Foundation (no date), 're — Regular expression operations', Python Documentation, viewed 8 May 2024, [https://docs.python.org/3/library/re.html](https://docs.python.org/3/library/re.html).
+- Python Software Foundation (n.d.), 'random — Generate pseudo-random numbers', Python Documentation. Retrieved from [https://docs.python.org/3/library/random.html](https://docs.python.org/3/library/random.html).
+
+- Python Software Foundation (n.d.), 're — Regular expression operations', Python Documentation. Retrieved from [https://docs.python.org/3/library/re.html](https://docs.python.org/3/library/re.html).
